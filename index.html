@@ -33,6 +33,11 @@
 
 				<br /> <input type="button" value="Update" id="update-button" onclick="updateButton()">
 			</form>
+			<div id="resources">
+				<a href="https://github.com/DeepBlueRobotics/RobotCode2018/blob/master/Robot2018/src/org/usfirst/frc/team199/Robot2018/autonomous/aaa-reference.md">AAA Reference</a>
+				<br />
+				<a href="https://github.com/DeepBlueRobotics/RobotCode2018/blob/master/AAAScripts/scripts.txt">Example Scripts</a>
+			</div>
 		</div>
 		<span id="openNav" onclick="openNav()">&#9776</span>
 		<h1 id="title">AAA Script Visualizer</h1>
@@ -40,15 +45,16 @@
 	<div id="content">
 		<div id="draw-area"></div>
 		<div id="text-container">
-			<textarea id="script-input" rows="30" cols="30" spellcheck="false" placeholder="Paste AAA script here..."></textarea>
+			<textarea id="script-input" rows="30" cols="30" spellcheck="false"></textarea>
 			<div id="script-display" onclick="hideDisplay()"><p>hi it's kevin</p></div>
 		</div>
 		<div id="actions">
+			<button id="cyan-button" style="border-color:cyan" onclick="validateButton()">Validate</button>
 			<button id="green-button" style="border-color:lightgreen" onclick="runButton()">Run</button>
 			<button id="red-button" style="border-color:red" onclick="stopButton()">Stop</button>
 			<button id="yellow-button" style="border-color:yellow" onclick="stepButton()">Step</button>
+			<button id="magenta-button" style="border-color:magenta" onclick="backButton()">Back</button>
 			<button id="blue-button" style="border-color:dodgerblue" onclick="resetButton()">Reset</button>
-			<button id="cyan-button" style="border-color:cyan" onclick="validateButton()">Validate</button>
 		</div>
 	</div>
 

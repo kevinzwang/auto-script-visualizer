@@ -31,7 +31,7 @@ body {
     font-size: 12pt;
     resize: none;
     padding: 8px 8px;
-    white-space: pre;
+    /* white-space: pre; */
     background-color: black;
     tab-size: 4;
 }
@@ -115,7 +115,7 @@ body {
 }
 
 /* The navigation menu links */
-.sidenav a {
+.sidenav .closebtn {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
@@ -163,4 +163,21 @@ label {
 #update-button:active {
     color:white;
     background-color: dodgerblue;
+}
+
+#resources {
+    bottom: 0;
+    position: fixed;
+    margin: 20px;
+}
+
+#resources a {
+    color: dodgerblue;
+    text-decoration: none;
+    line-height: 180%;
+    font-size: 18px;
+}
+
+#resources a:hover {
+    text-decoration: underline
 }

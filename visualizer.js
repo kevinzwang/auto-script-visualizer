@@ -5,6 +5,13 @@ var alColor = "dodgerblue"
 var opColor = "red"
 
 $(function () {
+	document.getElementById("script-input").placeholder = "Instructions on running this visualizer:"
+		+ "\n\n1) Paste the script inside this text box."
+		+ "\n\n2) Press Validate button to make sure it's valid syntax."
+		+ "\n\n3) Press Run to run the entire script or Step to run one line. (Step 2 required)"
+		+ "\n\n4) While it's running, press Stop to pause the script, or Reset to restart the script."
+		+ "\n\n5) Click on this text box again to modify script."
+
 	if (typeof (sessionStorage.scriptInput) !== "undefined") {
 		document.getElementById("script-input").value = sessionStorage.scriptInput;
 	}
@@ -221,7 +228,15 @@ $(function () {
 	}
 
 	document.getElementById("script-input").addEventListener("keyup", function () {
+		// store stuff between reloads
 		sessionStorage.scriptInput = document.getElementById("script-input").value;
+
+		// typed text no wrap, placeholder yes
+		if (document.getElementById("script-input").value == "") {
+			document.getElementById("script-input").style.whiteSpace = "pre-line"
+		} else {
+			document.getElementById("script-input").style.whiteSpace = "pre"
+		}
 	})
 })
 
@@ -264,6 +279,10 @@ function stopButton() {
 }
 
 function stepButton() {
+
+}
+
+function backButton() {
 
 }
 
