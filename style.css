@@ -101,6 +101,22 @@ body {
     color: dodgerblue;
 }
 
+
+#resources {
+    margin: 20px;
+}
+
+#resources a {
+    color: dodgerblue;
+    text-decoration: none;
+    line-height: 180%;
+    font-size: 16px;
+}
+
+#resources a:hover {
+    text-decoration: underline
+}
+
 .sidenav {
     height: 100%; /* 100% Full-height */
     width: 350px; /* 0 width - change this with JavaScript */
@@ -125,7 +141,7 @@ body {
 }
 
 .sidenav form {
-    font-size: 18px;
+    font-size: 16px;
     margin-left: 20px;
     color: black;
     line-height: 200%;
@@ -162,22 +178,4 @@ label {
 
 #update-button:active {
     color:white;
-    background-color: dodgerblue;
-}
-
-#resources {
-    bottom: 0;
-    position: fixed;
-    margin: 20px;
-}
-
-#resources a {
-    color: dodgerblue;
-    text-decoration: none;
-    line-height: 180%;
-    font-size: 18px;
-}
-
-#resources a:hover {
-    text-decoration: underline
 }

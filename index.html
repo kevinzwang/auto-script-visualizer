@@ -18,25 +18,24 @@
 				FMS Input: <input id="fms" placeholder="LLL" style="width: 30px">
 
 				<br /> Starting Position:
-				<br /> <input type="radio" name="start-pos" value="left" id="pos1" checked="checked">
+				<br /> <input type="radio" name="start-pos" value="left" id="pos1" checked="checked" onclick="setStartPos(this)">
 				<label for="pos1">Left</label>
-				<input type="radio" name="start-pos" value="center" id="pos2">
+				<input type="radio" name="start-pos" value="center" id="pos2" onclick="setStartPos(this)">
 				<label for="pos2">Center</label>
-				<input type="radio" name="start-pos" value="right" id="pos3">
+				<input type="radio" name="start-pos" value="right" id="pos3" onclick="setStartPos(this)">
 				<label for="pos3">Right</label>
 
 				<br /> Alliance Color:
-				<br /> <input type="radio" name="al-color" value="left" id="color1" checked="checked">
+				<br /> <input type="radio" name="al-color" value="blue" id="color1" checked="checked" onclick="setAlliance(this)">
 				<label for="color1">Blue</label>
-				<input type="radio" name="al-color" value="center" id="color2">
+				<input type="radio" name="al-color" value="red" id="color2" onclick="setAlliance(this)">
 				<label for="color2">Red</label>
 
-				<br /> <input type="button" value="Update" id="update-button" onclick="updateButton()">
 			</form>
 			<div id="resources">
-				<a href="https://github.com/DeepBlueRobotics/RobotCode2018/blob/master/Robot2018/src/org/usfirst/frc/team199/Robot2018/autonomous/aaa-reference.md">AAA Reference</a>
+				<a href="https://github.com/DeepBlueRobotics/RobotCode2018/blob/master/Robot2018/src/org/usfirst/frc/team199/Robot2018/autonomous/aaa-reference.md" target="_blank">AAA Reference</a>
 				<br />
-				<a href="https://github.com/DeepBlueRobotics/RobotCode2018/blob/master/AAAScripts/scripts.txt">Example Scripts</a>
+				<a href="https://github.com/DeepBlueRobotics/RobotCode2018/blob/master/AAAScripts/scripts.txt" target="_blank">Example Scripts</a>
 			</div>
 		</div>
 		<span id="openNav" onclick="openNav()">&#9776</span>

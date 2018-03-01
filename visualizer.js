@@ -1,5 +1,5 @@
 var updateArena = true;
-var fms;
+var fms = "LLL";
 var pos = "left"
 var alColor = "dodgerblue"
 var opColor = "red"
@@ -25,8 +25,6 @@ $(function () {
 
 	var arena = two.makeGroup()
 	var bot = makeBot(two, scaleFactor, arenaThickness, pos)
-
-	updateButton()
 
 	var moveSpeed = 1
 	var turnSpeed = Math.PI / 120
@@ -238,6 +236,21 @@ $(function () {
 			document.getElementById("script-input").style.whiteSpace = "pre"
 		}
 	})
+
+	document.getElementById("fms").addEventListener("keyup", function () {
+		var currInput = document.getElementById("fms").value
+		if (currInput == "") {
+			fms = "LLL"
+		} else if (isValidFMS(currInput)) {
+			fms = currInput
+		} else {
+			document.getElementById("fms").style.backgroundColor = "#ff8888"
+			return
+		}
+
+		document.getElementById("fms").style.backgroundColor = "initial"
+		updateArena = true
+	})
 })
 
 // TABS YESSSSS
@@ -295,29 +308,37 @@ function validateButton() {
 	document.getElementById("script-input").style.display = "none"
 }
 
-function updateButton() {
-	fms = document.getElementById("fms").value
+function hideDisplay() {
+	document.getElementById("script-display").style.display = "none"
+	document.getElementById("script-input").style.display = "block"
+}
 
-	var startRadios = document.getElementById("settings").elements["start-pos"]
-	for (var i = 0; i < startRadios.length; i++) {
-		if (startRadios[i].checked) {
-			pos = startRadios[i].value
+function isValidFMS(input) {
+	if (input.length != 3) {
+		return false;
+	}
+
+	for (var i = 0; i < input.length; i++) {
+		if (input.charAt(i) != "L" && input.charAt(i) != "R") {
+			return false;
 		}
 	}
 
-	var colorRadios = document.getElementById("settings").elements["al-color"]
-	if (colorRadios[0].checked) {
+	return true;
+}
+
+function setStartPos(radio) {
+	pos = radio.value
+	updateArena = true
+}
+
+function setAlliance(radio) {
+	if (radio.value == "blue") {
 		alColor = "dodgerblue"
 		opColor = "red"
 	} else {
 		alColor = "red"
 		opColor = "dodgerblue"
 	}
-
-	updateArena = true;
-}
-
-function hideDisplay() {
-	document.getElementById("script-display").style.display = "none"
-	document.getElementById("script-input").style.display = "block"
+	updateArena = true
 }
