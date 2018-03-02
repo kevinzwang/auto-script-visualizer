@@ -338,6 +338,7 @@ function validateButton() {
 function hideDisplay() {
 	document.getElementById("script-display").style.display = "none"
 	document.getElementById("script-input").style.display = "block"
+	unValidated()
 }
 
 function isValidFMS(input) {
@@ -429,4 +430,25 @@ function addSpans(string, toFind, className) {
 	}
 
 	return string
+}
+
+var colors = ["green", "red", "yellow", "magenta", "blue"]
+var actualColors = ["lightgreen", "red", "yellow", "magenta", "dodgerblue"]
+
+function validated() {
+	var foo = document.getElementsByClassName("need-validate")
+	for (var i = 0; i < foo.length; i++) {
+		foo[i].style.color = "white"
+	}
+
+	for (var i = 0; i < colors.length; i++) {
+		document.getElementById(colors[i] + "-button").style.borderColor = actualColors[i]
+	}
+}
+
+function unValidated() {
+	var foo = document.getElementsByClassName("need-validate")
+	for (var i = 0; i < foo.length; i++) {
+		foo[i].style.color = foo[i].style.borderColor = "grey"
+	}
 }

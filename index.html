@@ -49,11 +49,11 @@
 		</div>
 		<div id="actions">
 			<button id="cyan-button" style="border-color:cyan" onclick="validateButton()">Validate</button>
-			<button id="green-button" style="border-color:lightgreen" onclick="runButton()">Run</button>
-			<button id="red-button" style="border-color:red" onclick="stopButton()">Stop</button>
-			<button id="yellow-button" style="border-color:yellow" onclick="stepButton()">Step</button>
-			<button id="magenta-button" style="border-color:magenta" onclick="backButton()">Back</button>
-			<button id="blue-button" style="border-color:dodgerblue" onclick="resetButton()">Reset</button>
+			<button id="green-button" onclick="runButton()" class="need-validate">Run</button>
+			<button id="red-button" onclick="stopButton()" class="need-validate">Stop</button>
+			<button id="yellow-button" onclick="stepButton()" class="need-validate">Step</button>
+			<button id="magenta-button" onclick="backButton()" class="need-validate">Back</button>
+			<button id="blue-button" onclick="resetButton()" class="need-validate">Reset</button>
 		</div>
 	</div>
 

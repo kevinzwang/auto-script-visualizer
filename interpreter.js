@@ -39,9 +39,11 @@ function parseScript(input) {
             args = currLine.substring(indexOfSpace + 1)
         }
 
-        if (isValidCommand(instruction, args)) {
+        if (currLine == "" || isValidCommand(instruction, args)) {
             displayValidated(instruction, args, true)
-            output.push([instruction, args])
+            if (currLine != "") {
+                output.push([instruction, args])
+            }
         } else {
             displayValidated(instruction, args, false)
             allValid = false;
@@ -49,6 +51,8 @@ function parseScript(input) {
     }
 
     if (allValid) {
+        console.log("success")
+        validated()
         return output
     } else {
         return null

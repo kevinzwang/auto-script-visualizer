@@ -182,11 +182,11 @@ label {
 }
 
 .move {
-    color: #ff79c6
+    color: #50fa7b
 }
 
 .action {
-    color: #50fa7b
+    color: #46bfee
 }
 
 .misc {
@@ -194,7 +194,7 @@ label {
 }
 
 .parentheses {
-    color: #46bfee
+    color: #ff79c6
 }
 
 .comma {
@@ -203,4 +203,9 @@ label {
 
 .invalid  {
     color: #ff5555
+}
+
+.need-validate {
+    color: grey;
+    border-color: grey
 }
