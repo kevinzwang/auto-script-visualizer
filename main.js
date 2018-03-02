@@ -1,8 +1,13 @@
+var blue = "dodgerblue"
+var red = "red"
+
 var updateArena = true;
 var fms = "LLL";
 var pos = "left"
-var alColor = "dodgerblue"
-var opColor = "red"
+var alColor = blue
+var opColor = red
+
+var script = [];
 
 $(function () {
 	document.getElementById("script-input").placeholder = "Instructions on running this visualizer:"
@@ -26,11 +31,11 @@ $(function () {
 	if (typeof (sessionStorage.alColor) !== "undefined") {
 		document.getElementById(sessionStorage.alColor).checked = true
 		if (sessionStorage.alColor == "blue") {
-			alColor = "dodgerblue"
-			opColor = "red"
+			alColor = blue
+			opColor = red
 		} else {
-			alColor = "red"
-			opColor = "dodgerblue"
+			alColor = red
+			opColor = blue
 		}
 	}
 
@@ -324,8 +329,10 @@ function resetButton() {
 }
 
 function validateButton() {
+	document.getElementById("script-display").innerHTML = ""
 	document.getElementById("script-display").style.display = "block"
 	document.getElementById("script-input").style.display = "none"
+	script = parseScript(document.getElementById("script-input").value)
 }
 
 function hideDisplay() {
@@ -355,11 +362,71 @@ function setStartPos(radio) {
 function setAlliance(radio) {
 	sessionStorage.alColor = radio.value
 	if (radio.value == "blue") {
-		alColor = "dodgerblue"
-		opColor = "red"
+		alColor = blue
+		opColor = red
 	} else {
-		alColor = "red"
-		opColor = "dodgerblue"
+		alColor = red
+		opColor = blue
 	}
 	updateArena = true
+}
+
+function displayValidated(instruction, args, valid) {
+	var display = document.getElementById("script-display")
+
+	// console.log("instruction = " + instruction + ", args = " + args)
+
+	var currLine;
+
+	if (valid) {
+		var className;
+		switch (instruction) {
+			case "move":
+			case "moveto":
+			case "turn":
+			case "wait":
+				className = "move"
+				break
+			case "exchange":
+			case "intake":
+			case "scale":
+			case "switch":
+				className = "action"
+				break
+			case "end":
+				className = "misc"
+				break
+			default:
+				className = ""
+				break
+		}
+		currLine = "<span class=\"" + className + "\">" + instruction + "</span> "
+
+		args = addSpans(args, "(", "parentheses")
+		args = addSpans(args, ")", "parentheses")
+		args = addSpans(args, ",", "comma")
+
+		currLine += args
+	} else {
+		currLine = "<span class=\"invalid\">" + instruction + " " + args + "</span>"
+	}
+
+	if (display.innerHTML == "") {
+		document.getElementById("script-display").innerHTML = currLine
+	} else {
+		document.getElementById("script-display").innerHTML += "<br />" + currLine
+	}
+}
+
+function addSpans(string, toFind, className) {
+	var next = string.indexOf(toFind)
+
+	while (next != -1) {
+		var replace = "<span class=\"" + className + "\">" + string.substring(next, next + 1) + "</span>"
+		string = string.substring(0, next) + replace + string.substring(next + 1)
+
+		next = string.indexOf(toFind, next + replace.length)
+	}
+
+	return string
 }

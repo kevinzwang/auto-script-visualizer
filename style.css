@@ -43,10 +43,11 @@ body {
     font-size: 12pt;
     padding: 8px 8px;
     tab-size: 4;
-    display: none
+    display: none;
+    white-space: nowrap;
 }
 
-#script-display p {
+#script-display {
     margin: 0;
     text-align: left;
 }
@@ -178,4 +179,28 @@ label {
 
 #update-button:active {
     color:white;
+}
+
+.move {
+    color: #ff79c6
+}
+
+.action {
+    color: #50fa7b
+}
+
+.misc {
+    color: #bd93f9 
+}
+
+.parentheses {
+    color: #46bfee
+}
+
+.comma {
+    color: #ffb86c
+}
+
+.invalid  {
+    color: #ff5555
 }

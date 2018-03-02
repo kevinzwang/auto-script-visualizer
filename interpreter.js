@@ -1,3 +1,61 @@
+function parseScript(input) {
+
+    var output = new Array();
+    var lines = input.split(/\r?\n/)
+
+    var allValid = true;
+
+    for (var i = 0; i < lines.length; i++) {
+        var currLine = lines[i]
+
+        var end = currLine.indexOf("#")
+        if (end == -1) {
+            end = currLine.length
+        }
+
+        currLine = currLine.substring(0, end).trim()
+
+        var parenIndex = currLine.indexOf("(");
+        while (parenIndex != -1) {
+            // removes all spaces between the parentheses
+            var endParenIndex = currLine.indexOf(")", parenIndex);
+            var coord = currLine.substring(parenIndex + 1, endParenIndex);
+            currLine = currLine.substring(0, parenIndex + 1) + coord.replace(/ /g, "") + currLine.substring(endParenIndex);
+
+            // finds next parentheses
+            parenIndex = currLine.indexOf("(", parenIndex + 1);
+        }
+
+        var indexOfSpace = currLine.indexOf(" ")
+
+        var instruction;
+        var args;
+
+        if (indexOfSpace == -1) {
+            instruction = currLine
+            args = ""
+        } else {
+            instruction = currLine.substring(0, indexOfSpace)
+            args = currLine.substring(indexOfSpace + 1)
+        }
+
+        if (isValidCommand(instruction, args)) {
+            displayValidated(instruction, args, true)
+            output.push([instruction, args])
+        } else {
+            displayValidated(instruction, args, false)
+            allValid = false;
+        }
+    }
+
+    if (allValid) {
+        return output
+    } else {
+        return null
+    }
+}
+
+
 /**
  * Validates the command inputted to see if it's AAA compliant
  * 
@@ -13,7 +71,7 @@ function isValidCommand(instruction, args) {
         }
 
         var splitArgs = args.split(" ");
-        for (vari = 0; i < splitArgs.length - 1; i++) {
+        for (var i = 0; i < splitArgs.length - 1; i++) {
             if (!isPoint(splitArgs[i])) {
                 return false;
             }
@@ -84,8 +142,8 @@ function isPoint(s) {
         return false;
 
     // checks that there's one, and only one comma (like this phrase)
-    varindexOfComma = s.indexOf(',');
-    varcount = 0;
+    var indexOfComma = s.indexOf(',');
+    var count = 0;
     while (indexOfComma != -1) {
         count++;
         indexOfComma = s.indexOf(',', indexOfComma + 1);
