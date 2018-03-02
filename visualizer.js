@@ -12,9 +12,28 @@ $(function () {
 		+ "\n\n4) While it's running, press Stop to pause the script, or Reset to restart the script."
 		+ "\n\n5) Click on this text box again to modify script."
 
+	// get data from before refresh
 	if (typeof (sessionStorage.scriptInput) !== "undefined") {
 		document.getElementById("script-input").value = sessionStorage.scriptInput;
 	}
+	if (typeof (sessionStorage.fms) !== "undefined") {
+		document.getElementById("fms").value = fms = sessionStorage.fms
+	}
+	if (typeof (sessionStorage.pos) !== "undefined") {
+		pos = sessionStorage.pos
+		document.getElementById(sessionStorage.pos).checked = true
+	}
+	if (typeof (sessionStorage.alColor) !== "undefined") {
+		document.getElementById(sessionStorage.alColor).checked = true
+		if (sessionStorage.alColor == "blue") {
+			alColor = "dodgerblue"
+			opColor = "red"
+		} else {
+			alColor = "red"
+			opColor = "dodgerblue"
+		}
+	}
+
 
 	var elem = document.getElementById("draw-area")
 	var scaleFactor = 1
@@ -248,6 +267,7 @@ $(function () {
 			return
 		}
 
+		sessionStorage.fms = fms
 		document.getElementById("fms").style.backgroundColor = "initial"
 		updateArena = true
 	})
@@ -328,11 +348,12 @@ function isValidFMS(input) {
 }
 
 function setStartPos(radio) {
-	pos = radio.value
+	sessionStorage.pos = pos = radio.value
 	updateArena = true
 }
 
 function setAlliance(radio) {
+	sessionStorage.alColor = radio.value
 	if (radio.value == "blue") {
 		alColor = "dodgerblue"
 		opColor = "red"
