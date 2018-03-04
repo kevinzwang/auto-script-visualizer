@@ -1,211 +1,173 @@
 * {
-    color: white;
-    font-family: "Lucida Console", Monaco, monospace;
-}
+  color: white;
+  font-family: "Lucida Console", Monaco, monospace; }
 
 body {
-    transition: background-color .5s;
-    background-color: black;
-}
+  transition: background-color .5s;
+  background-color: black; }
 
 #content {
-    max-width: 700px;
-    margin: auto;
-    text-align:center;
-}
+  max-width: 700px;
+  margin: auto;
+  text-align: center; }
 
 #draw-area {
-    float: left;
-    margin: 10px
-}
+  float: left;
+  margin: 10px; }
 
 #text-container {
-    float: left;
-    margin: 10px;
-    position: relative;
-}
+  float: left;
+  margin: 10px;
+  position: relative; }
 
-#script-input  {
-    text-align: left;
-    position: absolute;
-    font-size: 12pt;
-    resize: none;
-    padding: 8px 8px;
-    /* white-space: pre; */
-    background-color: black;
-    tab-size: 4;
-}
+#script-input {
+  text-align: left;
+  position: absolute;
+  font-size: 12pt;
+  resize: none;
+  padding: 8px 8px;
+  white-space: pre;
+  background-color: black;
+  tab-size: 4; }
 
-#script-display {
-    width: 324px;
-    height: 648px;
-    position: absolute;
-    font-size: 12pt;
-    padding: 8px 8px;
-    tab-size: 4;
-    display: none;
-    white-space: nowrap;
-}
+::placeholder {
+  white-space: pre-line; }
 
 #script-display {
-    margin: 0;
-    text-align: left;
-}
+  width: 324px;
+  height: 648px;
+  position: absolute;
+  font-size: 12pt;
+  padding: 8px 8px;
+  tab-size: 4;
+  display: none;
+  white-space: nowrap;
+  margin: 0;
+  text-align: left; }
 
 #actions {
-    clear: both;
-    margin: auto;
-    padding: 10px;
-}
+  clear: both;
+  margin: auto;
+  padding: 10px; }
 
-#actions button  {
-    font-size: 12pt;
-    padding: 6px 10px;
-    background-color: black;
-}
+#actions button {
+  font-size: 12pt;
+  padding: 6px 10px;
+  background-color: black; }
 
-#green-button:active {
+#run-button {
+  color: grey; }
+  #run-button :active {
     background-color: lightgreen;
-    color: black;
-}
-#red-button:active {
+    color: black; }
+
+#stop-button {
+  color: grey; }
+  #stop-button :active {
     background-color: red;
-    color: black;
-}
-#yellow-button:active {
-    background-color: yellow;
-    color: black;
-}
-#blue-button:active {
-    background-color: dodgerblue;
-    color: black;
-}
-#cyan-button:active {
-    background-color: cyan;
-    color: black;
-}
+    color: black; }
+
+#reset-button {
+  color: grey; }
+  #reset-button :active {
+    background-color: blue;
+    color: black; }
+
+#validate-button :active {
+  background-color: cyan;
+  color: black; }
 
 #title {
-    font-size: 24pt;
-    text-align: center;
-    margin: auto;
-    margin-bottom: 10px;
-}
+  font-size: 24pt;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 10px; }
 
 #openNav {
-    font-size: 20pt;
-    margin-left: 20px;
-    transition: 0.3s;
-}
-
-#openNav:hover {
-    color: dodgerblue;
-}
-
+  font-size: 20pt;
+  margin-left: 20px;
+  transition: 0.3s; }
+  #openNav :hover {
+    color: dodgerblue; }
 
 #resources {
-    margin: 20px;
-}
-
-#resources a {
+  margin: 20px; }
+  #resources a {
     color: dodgerblue;
     text-decoration: none;
     line-height: 180%;
-    font-size: 16px;
-}
-
-#resources a:hover {
-    text-decoration: underline
-}
+    font-size: 16px; }
+    #resources a :hover {
+      text-decoration: underline; }
 
 .sidenav {
-    height: 100%; /* 100% Full-height */
-    width: 350px; /* 0 width - change this with JavaScript */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
-    top: 0; /* Stay at the top */
-    left: -350px;
-    background-color: white; /* Black*/
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-}
-
-/* The navigation menu links */
-.sidenav .closebtn {
+  height: 100%;
+  /* 100% Full-height */
+  width: 350px;
+  /* 0 width - change this with JavaScript */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Stay on top */
+  top: 0;
+  /* Stay at the top */
+  left: -350px;
+  background-color: white;
+  /* Black*/
+  overflow-x: hidden;
+  /* Disable horizontal scroll */
+  padding-top: 60px;
+  /* Place content 60px from the top */
+  transition: 0.5s;
+  /* 0.5 second transition effect to slide in the sidenav */ }
+  .sidenav .closebtn {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
     color: black;
     display: block;
     transition: 0.3s;
-}
-
-.sidenav form {
-    font-size: 16px;
-    margin-left: 20px;
-    color: black;
-    line-height: 200%;
-}
-
-.sidenav form input {
-    font-size: 16px;
-    padding-left: 5px;
-    padding-right: 5px;
-    color: black;
-}
-
-/* When you mouse over the navigation links, change their color */
-.sidenav a:hover {
-    color: dodgerblue;
-}
-
-/* Position and style the close button (top right corner) */
-.sidenav .closebtn {
     position: absolute;
     top: 0;
     right: 25px;
     font-size: 36px;
-    margin-left: 50px;
-}
+    margin-left: 50px; }
+  .sidenav form {
+    font-size: 16px;
+    margin-left: 20px;
+    color: black;
+    line-height: 200%; }
+    .sidenav form input {
+      font-size: 16px;
+      padding-left: 5px;
+      padding-right: 5px;
+      color: black; }
+  .sidenav a:hover {
+    color: dodgerblue; }
 
 label {
-    color: black;
-}
+  color: black; }
 
 :focus {
-    outline: none;
-}
-
-#update-button:active {
-    color:white;
-}
+  outline: none; }
 
 .move {
-    color: #50fa7b
-}
+  color: #50fa7b; }
 
 .action {
-    color: #46bfee
-}
+  color: #46bfee; }
 
 .misc {
-    color: #bd93f9 
-}
+  color: #bd93f9; }
 
 .parentheses {
-    color: #ff79c6
-}
+  color: #ff79c6; }
 
 .comma {
-    color: #ffb86c
-}
+  color: #ffb86c; }
 
-.invalid  {
-    color: #ff5555
-}
+.invalid {
+  color: #ff5555;
+  background-color: rgba(255, 85, 85, 0.4); }
 
-.need-validate {
-    color: grey;
-    border-color: grey
-}
+/*# sourceMappingURL=style.css.map */

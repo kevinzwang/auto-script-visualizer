@@ -252,13 +252,6 @@ $(function () {
 	document.getElementById("script-input").addEventListener("keyup", function () {
 		// store stuff between reloads
 		sessionStorage.scriptInput = document.getElementById("script-input").value;
-
-		// typed text no wrap, placeholder yes
-		if (document.getElementById("script-input").value == "") {
-			document.getElementById("script-input").style.whiteSpace = "pre-line"
-		} else {
-			document.getElementById("script-input").style.whiteSpace = "pre"
-		}
 	})
 
 	document.getElementById("fms").addEventListener("keyup", function () {
@@ -372,7 +365,7 @@ function setAlliance(radio) {
 	updateArena = true
 }
 
-function displayValidated(instruction, args, valid) {
+function displayValidated(instruction, args, valid, line) {
 	var display = document.getElementById("script-display")
 
 	// console.log("instruction = " + instruction + ", args = " + args)
@@ -412,6 +405,8 @@ function displayValidated(instruction, args, valid) {
 		currLine = "<span class=\"invalid\">" + instruction + " " + args + "</span>"
 	}
 
+	currLine = "<span class=\"line" + line + "\">" + currLine + "</span>"
+
 	if (display.innerHTML == "") {
 		document.getElementById("script-display").innerHTML = currLine
 	} else {
@@ -432,23 +427,27 @@ function addSpans(string, toFind, className) {
 	return string
 }
 
-var colors = ["green", "red", "yellow", "magenta", "blue"]
-var actualColors = ["lightgreen", "red", "yellow", "magenta", "dodgerblue"]
+var validateDependent = ["run", "stop", "reset"]
+
+var buttonColors = {
+	"validate": "cyan",
+	"run": "lightgreen",
+	"stop": "red",
+	"reset": "dodgerblue"
+}
 
 function validated() {
-	var foo = document.getElementsByClassName("need-validate")
-	for (var i = 0; i < foo.length; i++) {
-		foo[i].style.color = "white"
-	}
-
-	for (var i = 0; i < colors.length; i++) {
-		document.getElementById(colors[i] + "-button").style.borderColor = actualColors[i]
+	for (var i = 0; i < validateDependent.length; i++) {
+		var button = document.getElementById(validateDependent[i] + "-button")
+		button.style.color = "white"
+		button.style.borderColor = buttonColors[validateDependent[i]]
 	}
 }
 
 function unValidated() {
-	var foo = document.getElementsByClassName("need-validate")
-	for (var i = 0; i < foo.length; i++) {
-		foo[i].style.color = foo[i].style.borderColor = "grey"
+	for (var i = 0; i < validateDependent.length; i++) {
+		var button = document.getElementById(validateDependent[i] + "-button")
+		button.style.color = "grey"
+		button.style.borderColor = "grey"
 	}
 }

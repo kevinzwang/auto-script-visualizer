@@ -48,17 +48,16 @@
 			<div id="script-display" onclick="hideDisplay()"><span class="instruction">hi</span> <span class="parentheses">it's</span> <span class="comma">kevin <span class="comment"># this is a comment</span></div>
 		</div>
 		<div id="actions">
-			<button id="cyan-button" style="border-color:cyan" onclick="validateButton()">Validate</button>
-			<button id="green-button" onclick="runButton()" class="need-validate">Run</button>
-			<button id="red-button" onclick="stopButton()" class="need-validate">Stop</button>
-			<button id="yellow-button" onclick="stepButton()" class="need-validate">Step</button>
-			<button id="magenta-button" onclick="backButton()" class="need-validate">Back</button>
-			<button id="blue-button" onclick="resetButton()" class="need-validate">Reset</button>
+			<button id="validate-button" style="border-color:cyan" onclick="validateButton()">Validate</button>
+			<button id="run-button" onclick="runButton()">Run</button>
+			<button id="stop-button" onclick="stopButton()">Stop</button>
+			<button id="reset-button" onclick="resetButton()">Reset</button>
 		</div>
 	</div>
 
 	<script src="main.js"></script>
 	<script src="interpreter.js"></script>
+	<script src="instructions.js"></script>
 </body>
 
 </html>

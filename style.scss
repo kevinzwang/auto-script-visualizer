@@ -1,0 +1,211 @@
+$val-btn-color: cyan;
+$run-btn-color: lightgreen;
+$stop-btn-color: red;
+$reset-btn-color: blue;
+$disabled-btn-color: grey;
+
+* {
+	color: white;
+	font-family: "Lucida Console", Monaco, monospace;
+}
+
+body {
+	transition: background-color .5s;
+	background-color: black;
+}
+
+#content {
+	max-width: 700px;
+	margin: auto;
+	text-align:center;
+}
+
+#draw-area {
+	float: left;
+	margin: 10px
+}
+
+#text-container {
+	float: left;
+	margin: 10px;
+	position: relative;
+}
+
+#script-input  {
+	text-align: left;
+	position: absolute;
+	font-size: 12pt;
+	resize: none;
+	padding: 8px 8px;
+	white-space: pre;
+	background-color: black;
+	tab-size: 4;
+}
+
+::placeholder {
+	white-space: pre-line
+}
+
+#script-display {
+	width: 324px;
+	height: 648px;
+	position: absolute;
+	font-size: 12pt;
+	padding: 8px 8px;
+	tab-size: 4;
+	display: none;
+	white-space: nowrap;
+	margin: 0;
+	text-align: left;
+}
+
+#actions {
+	clear: both;
+	margin: auto;
+	padding: 10px;
+}
+
+#actions button  {
+	font-size: 12pt;
+	padding: 6px 10px;
+	background-color: black;
+}
+
+#run-button {
+	color: $disabled-btn-color;
+	:active {
+		background-color: $run-btn-color;
+		color: black;
+	}
+}
+
+#stop-button {
+	color: $disabled-btn-color;
+	:active {
+		background-color: $stop-btn-color;
+		color: black;
+	}
+}
+#reset-button {
+	color: $disabled-btn-color;
+	:active {
+		background-color: $reset-btn-color;
+		color: black;
+	}
+}
+#validate-button {
+	:active {
+		background-color: $val-btn-color;
+		color: black;
+	}
+}
+
+
+#title {
+	font-size: 24pt;
+	text-align: center;
+	margin: auto;
+	margin-bottom: 10px;
+}
+
+#openNav {
+	font-size: 20pt;
+	margin-left: 20px;
+	transition: 0.3s;
+
+	:hover {
+		color: dodgerblue;
+	}
+}
+
+#resources {
+	margin: 20px;
+	a {
+		color: dodgerblue;
+		text-decoration: none;
+		line-height: 180%;
+		font-size: 16px;
+
+		:hover {
+			text-decoration: underline
+		}
+	}
+}
+
+.sidenav {
+	height: 100%; /* 100% Full-height */
+	width: 350px; /* 0 width - change this with JavaScript */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Stay on top */
+	top: 0; /* Stay at the top */
+	left: -350px;
+	background-color: white; /* Black*/
+	overflow-x: hidden; /* Disable horizontal scroll */
+	padding-top: 60px; /* Place content 60px from the top */
+	transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+
+	.closebtn {
+		padding: 8px 8px 8px 32px;
+		text-decoration: none;
+		font-size: 25px;
+		color: black;
+		display: block;
+		transition: 0.3s;
+		position: absolute;
+		top: 0;
+		right: 25px;
+		font-size: 36px;
+		margin-left: 50px;
+	}
+
+	form {
+		font-size: 16px;
+		margin-left: 20px;
+		color: black;
+		line-height: 200%;
+
+		input {
+			font-size: 16px;
+			padding-left: 5px;
+			padding-right: 5px;
+			color: black;
+		}
+	}
+
+	a:hover {
+		color: dodgerblue;
+	}
+}
+
+label {
+	color: black;
+}
+
+:focus {
+	outline: none;
+}
+
+.move {
+	color: #50fa7b
+}
+
+.action {
+	color: #46bfee
+}
+
+.misc {
+	color: #bd93f9 
+}
+
+.parentheses {
+	color: #ff79c6
+}
+
+.comma {
+	color: #ffb86c
+}
+
+.invalid  {
+	color: #ff5555;
+	background-color: rgba(255, 85, 85, 0.4);
+}

@@ -1,6 +1,6 @@
 function parseScript(input) {
 
-    var output = new Array();
+    var output = [];
     var lines = input.split(/\r?\n/)
 
     var allValid = true;
@@ -40,18 +40,31 @@ function parseScript(input) {
         }
 
         if (currLine == "" || isValidCommand(instruction, args)) {
-            displayValidated(instruction, args, true)
+            displayValidated(instruction, args, true, i)
             if (currLine != "") {
-                output.push([instruction, args])
+                if (instruction == "moveto") {
+                    var argArray = args.split(" ")
+                    for (var j = 0; j < argArray.length - 1; j++) {
+                        output.push({ line: i, cmd: ["move", argArray[i]] })
+                    }
+                    if (isPoint(argArray[argArray.length - 1])) {
+                        output.push({ line: i, cmd: ["move", argArray[argArray.length - 1]] })
+                    } else {
+                        output.push({ line: i, cmd: ["turn", argArray[argArray.length - 1]] })
+                    }
+                } else {
+                    output.push({ line: i, cmd: [instruction, args] })
+                }
             }
         } else {
-            displayValidated(instruction, args, false)
+            displayValidated(instruction, args, false, i)
             allValid = false;
         }
     }
 
     if (allValid) {
         console.log("success")
+        console.log(output)
         validated()
         return output
     } else {
