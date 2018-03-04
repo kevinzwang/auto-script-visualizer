@@ -9,6 +9,16 @@ var opColor = red
 
 var script = [];
 
+var validScript = false;
+var running = false;
+
+var cmdCount = 0;
+var currCmd = null;
+
+var scaleFactor = 1
+
+var two;
+
 $(function () {
 	document.getElementById("script-input").placeholder = "Instructions on running this visualizer:"
 		+ "\n\n1) Paste the script inside this text box."
@@ -41,40 +51,86 @@ $(function () {
 
 
 	var elem = document.getElementById("draw-area")
-	var scaleFactor = 1
+
 	var params = { width: 27 * 12 * scaleFactor, height: 54 * 12 * scaleFactor }
-	var two = new Two(params).appendTo(elem)
+	two = new Two(params).appendTo(elem)
 
 	var arenaThickness = 3;
 
 	var arena = two.makeGroup()
-	var bot = makeBot(two, scaleFactor, arenaThickness, pos)
+	var bot = two.makeGroup()
+	var botCube;
 
 	var moveSpeed = 1
 	var turnSpeed = Math.PI / 120
 
+	var strayCubes = [];
+
 	two.bind("update", function (frameCount) {
 		if (updateArena) {
-			arena.remove()
-			bot.remove()
-			arena = makeArena(two, scaleFactor, arenaThickness)
-			bot = makeBot(two, scaleFactor, arenaThickness, pos)
+			two.remove(arena, bot)
+			two.remove(strayCubes)
+			makeEverything(two, scaleFactor, arenaThickness, pos)
 			updateArena = false;
 		}
 
+		if (running) {
+			if (currCmd == null) {
+				if (cmdCount < script.length) {
+					switch (script[cmdCount]["cmd"][0]) {
+						case "move":
+							currCmd = new Move(script[cmdCount]["cmd"][1], bot, two)
+							break
+						case "turn":
+							currCmd = new Turn(script[cmdCount]["cmd"][1], bot, two)
+							break
+						case "switch": case "scale": case "exchange":
+							currCmd = new Eject(script[cmdCount]["cmd"][1], bot, two, botCube)
+							strayCubes.push(currCmd.dropCube())
+							break;
+						case "intake":
+							currCmd = new Intake(script[cmdCount]["cmd"][1], bot, two)
+							botCube = currCmd.getCube()
+							break;
+						case "wait":
+							currCmd = new Wait(script[cmdCount]["cmd"][1], bot, two)
+							break;
+						case "end":
+							running = false;
+							break;
+						default:
+							console.log("idk what this is: " + script[cmdCount]["cmd"][0])
+					}
+
+					document.getElementById("line" + script[cmdCount]["line"]).classList.add("curr-line")
+				} else {
+					running = false;
+				}
+			}
+
+			if (running) { // just to make sure it's still running
+				if (!currCmd.isFinished()) {
+					currCmd.execute()
+				} else {
+					document.getElementById("line" + (script[cmdCount]["line"])).classList.remove("curr-line")
+					cmdCount++
+					currCmd = null;
+					console.log("finished one cmd")
+					if (cmdCount >= script.length) {
+						console.log("done")
+						running = false;
+					}
+				}
+			}
+		}
 
 	}).play()
 
-
-	function moveFwd(bot, speed) {
-		var dx = Math.sin(bot.rotation) * speed
-		var dy = - Math.cos(bot.rotation) * speed
-		bot.translation.x += dx
-		bot.translation.y += dy
-	}
-
-	function turn(bot, speed) {
-		bot.rotation += speed
+	function makeEverything(two, scaleFactor, arenaThickness, pos) {
+		arena = makeArena(two, scaleFactor, arenaThickness)
+		bot = makeBot(two, scaleFactor, arenaThickness, pos)
+		botCube = makeInitCube(two, scaleFactor, bot)
+		bot.add(botCube)
 	}
 
 	function makeArena(two, scaleFactor, arenaThickness) {
@@ -83,6 +139,10 @@ $(function () {
 		var op = two.makeGroup();
 		var neutral = two.makeGroup();
 		var cubes = two.makeGroup();
+
+		// auto lines
+		var opLine = two.makeLine(0, 120 * scaleFactor, two.width, 120 * scaleFactor)
+		var alLine = two.makeLine(0, two.height - 120 * scaleFactor, two.width, two.height - 120 * scaleFactor)
 
 		// make the borders
 		var opBorder = two.makePath(
@@ -178,6 +238,7 @@ $(function () {
 		alExchange.translation.set((30 + 92 + 21 / 2) * scaleFactor, two.height - (6.5 / 2 * scaleFactor + arenaThickness))
 
 		// finally set things up
+		neutral.add(opSwitch, alSwitch, scale, alLine, opLine);
 		cubes.add(cube1, cube2, cube3, cube4, cube5, cube6, cube7, cube8, cube9, cube10, cube11, cube12, cube13, cube14, cube15, cube16, cube17, cube18, cube19, cube20, cube21, cube22, cube23, cube24);
 		al.add(alBorder, alExchZone, alExchange);
 		op.add(opBorder, opExchZone, opExchange);
@@ -209,7 +270,7 @@ $(function () {
 			op.add(opLeftSw)
 		}
 
-		neutral.add(opSwitch, alSwitch, scale);
+
 		arena.add(al, op, neutral);
 		cubes.linewidth = 1.5;
 		cubes.stroke = "gold";
@@ -227,24 +288,34 @@ $(function () {
 	function makeBot(two, scaleFactor, arenaThickness, pos) {
 		var frame = two.makeRectangle(0, 0, 28 * scaleFactor, 33 * scaleFactor)
 
-		var bot = two.makeGroup(frame)
+		var transX;
+		var transY;
 		switch (pos) {
 			case "left":
-				bot.translation.set((30 + 28 / 2) * scaleFactor + arenaThickness, two.height - (33 / 2) * scaleFactor - arenaThickness)
+				transX = (30 + 28 / 2) * scaleFactor + arenaThickness
+				transY = two.height - (33 / 2) * scaleFactor - arenaThickness
 				break;
 			case "center":
-				bot.translation.set((30 + 72 + 48 + 28 / 2) * scaleFactor + arenaThickness, two.height - (33 / 2) * scaleFactor - arenaThickness)
+				transX = (30 + 72 + 48 + 28 / 2) * scaleFactor + arenaThickness
+				transY = two.height - (33 / 2) * scaleFactor - arenaThickness
 				break
 			case "right":
-				bot.translation.set(two.width - (30 + 28 / 2) * scaleFactor - arenaThickness, two.height - (33 / 2) * scaleFactor - arenaThickness)
+				transX = two.width - (30 + 28 / 2) * scaleFactor - arenaThickness
+				transY = two.height - (33 / 2) * scaleFactor - arenaThickness
 				break
 			default:
-				break;
+				transX = transy = 0;
 		}
 
-		bot.stroke = alColor
-		bot.fill = "white"
-		bot.linewidth = 6
+		var bot = two.makeGroup(frame)
+
+		bot.translation.set(transX, transY)
+		bot.originX = transX
+		bot.originY = transY
+
+		frame.stroke = alColor
+		frame.fill = "white"
+		frame.linewidth = 6
 
 		return bot
 	}
@@ -270,6 +341,19 @@ $(function () {
 		updateArena = true
 	})
 })
+
+var cubeSize = 12;
+function makeCube(two, x, y) {
+	var cube = two.makeRectangle(x, y, cubeSize * scaleFactor, cubeSize * scaleFactor);
+	cube.linewidth = 1.5;
+	cube.stroke = "gold";
+	cube.fill = "yellow";
+	return cube;
+}
+
+function makeInitCube(two, bot) {
+	return makeCube(two, 0, - (33 + 12) / 2 * scaleFactor)
+}
 
 // TABS YESSSSS
 $(document).delegate('#script-input', 'keydown', function (e) {
@@ -302,26 +386,26 @@ function closeNav() {
 }
 
 function runButton() {
-	console.log("run button pressed")
+	if (validScript) {
+		running = true;
+	}
 }
 
 function stopButton() {
-
-}
-
-function stepButton() {
-
-}
-
-function backButton() {
-
+	running = false
 }
 
 function resetButton() {
+	updateArena = true;
+	cmdCount = 0
+	currCmd = null
+	running = false
 
 }
 
 function validateButton() {
+	resetButton()
+	running = false;
 	document.getElementById("script-display").innerHTML = ""
 	document.getElementById("script-display").style.display = "block"
 	document.getElementById("script-input").style.display = "none"
@@ -405,7 +489,7 @@ function displayValidated(instruction, args, valid, line) {
 		currLine = "<span class=\"invalid\">" + instruction + " " + args + "</span>"
 	}
 
-	currLine = "<span class=\"line" + line + "\">" + currLine + "</span>"
+	currLine = "<span id=\"line" + line + "\">" + currLine + "</span>"
 
 	if (display.innerHTML == "") {
 		document.getElementById("script-display").innerHTML = currLine
@@ -442,6 +526,7 @@ function validated() {
 		button.style.color = "white"
 		button.style.borderColor = buttonColors[validateDependent[i]]
 	}
+	validScript = true;
 }
 
 function unValidated() {
@@ -450,4 +535,12 @@ function unValidated() {
 		button.style.color = "grey"
 		button.style.borderColor = "grey"
 	}
+	validScript = false;
+}
+
+function rel2RawX(x) {
+	return x
+}
+function rel2RawY(y) {
+	return two.height - y
 }

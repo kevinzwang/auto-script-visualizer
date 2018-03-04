@@ -170,4 +170,7 @@ label {
   color: #ff5555;
   background-color: rgba(255, 85, 85, 0.4); }
 
+.curr-line {
+  background-color: rgba(144, 238, 144, 0.4); }
+
 /*# sourceMappingURL=style.css.map */

@@ -45,13 +45,18 @@ function parseScript(input) {
                 if (instruction == "moveto") {
                     var argArray = args.split(" ")
                     for (var j = 0; j < argArray.length - 1; j++) {
-                        output.push({ line: i, cmd: ["move", argArray[i]] })
+                        output.push({ line: i, cmd: ["turn", argArray[j]] })
+                        output.push({ line: i, cmd: ["move", argArray[j]] })
                     }
                     if (isPoint(argArray[argArray.length - 1])) {
+                        output.push({ line: i, cmd: ["turn", argArray[argArray.length - 1]] })
                         output.push({ line: i, cmd: ["move", argArray[argArray.length - 1]] })
                     } else {
                         output.push({ line: i, cmd: ["turn", argArray[argArray.length - 1]] })
                     }
+                } else if (instruction == "switch" || instruction == "scale" || instruction == "exchange" || instruction == "intake") {
+                    output.push({ line: i, cmd: ["move", "12"] })
+                    output.push({ line: i, cmd: [instruction, args] })
                 } else {
                     output.push({ line: i, cmd: [instruction, args] })
                 }
@@ -189,9 +194,9 @@ function parsePoint(cmdArgs) {
         pointparts = parentheseless.split(",");
         point.push(parseFloat(pointparts[0]))
         point.push(parseFloat(pointparts[1]))
-        if (point[0] == NaN || point[1] == NaN) {
-            point[0] = 1;
-            point[1] = 1;
+        if (isNaN(point[0]) || isNaN(point[1])) {
+            point[0] = 0;
+            point[1] = 0;
         }
     }
     return point;
