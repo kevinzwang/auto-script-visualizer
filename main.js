@@ -144,14 +144,15 @@ $(function () {
 		var opLine = two.makeLine(0, 120 * scaleFactor, two.width, 120 * scaleFactor)
 		var alLine = two.makeLine(0, two.height - 120 * scaleFactor, two.width, two.height - 120 * scaleFactor)
 
+		var padding = arenaThickness / 2;
 		// make the borders
 		var opBorder = two.makePath(
-			arenaThickness, two.height / 2,
-			arenaThickness, 35 * scaleFactor,
-			30 * scaleFactor, arenaThickness,
-			two.width - (30 * scaleFactor), arenaThickness,
-			two.width - arenaThickness, 35 * scaleFactor,
-			two.width - arenaThickness, two.height / 2,
+			padding, two.height / 2,
+			padding, 35 * scaleFactor,
+			30 * scaleFactor, padding,
+			two.width - (30 * scaleFactor), padding,
+			two.width - padding, 35 * scaleFactor,
+			two.width - padding, two.height / 2,
 			true
 		);
 		var alBorder = opBorder.clone();
@@ -159,13 +160,13 @@ $(function () {
 		alBorder.rotation = Math.PI;
 
 		// make the switches and scale
-		var opSwitch = two.makeRectangle(two.width / 2, 168 * scaleFactor, 153.5 * scaleFactor, 56 * scaleFactor);
+		var opSwitch = two.makeRectangle(two.width / 2, 168 * scaleFactor, 146 * scaleFactor, 52 * scaleFactor);
 		var alSwitch = opSwitch.clone();
 		alSwitch.translation.set(two.width / 2, two.height - 168 * scaleFactor);
 		var scale = two.makeRectangle(two.width / 2, two.height / 2, 117 * scaleFactor, 12 * scaleFactor);
-		var switchX = two.width / 2 - (153.5 / 2 - 4 - 36 / 2) * scaleFactor;
-		var scaleX = two.width / 2 - (108 / 2 + 36 / 2) * scaleFactor;
-		var opLeftSw = two.makeRectangle(switchX, 168 * scaleFactor, 36 * scaleFactor, 48 * scaleFactor);
+		var switchX = two.width / 2 - (150 / 2 - 4 - 36 / 2) * scaleFactor;
+		var scaleX = two.width / 2 - (102 / 2 + 36 / 2) * scaleFactor;
+		var opLeftSw = two.makeRectangle(switchX, 168 * scaleFactor, 35 * scaleFactor, 46 * scaleFactor);
 		var opRightSw = opLeftSw.clone();
 		opRightSw.translation.set(two.width - switchX, 168 * scaleFactor);
 		var alLeftSw = opLeftSw.clone();
