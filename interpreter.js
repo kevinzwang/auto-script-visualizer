@@ -54,7 +54,7 @@ function parseScript(input) {
                     } else {
                         output.push({ line: i, cmd: ["turn", argArray[argArray.length - 1]] })
                     }
-                } else if (instruction == "switch" || instruction == "scale" || instruction == "exchange" || instruction == "intake") {
+                } else if (instruction == "switch" || instruction == "scale" || instruction == "intake") {
                     output.push({ line: i, cmd: ["move", "12"] })
                     output.push({ line: i, cmd: [instruction, args] })
                 } else {
