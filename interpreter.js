@@ -57,6 +57,7 @@ function parseScript(input) {
                 } else if (instruction == "switch" || instruction == "scale" || instruction == "intake") {
                     output.push({ line: i, cmd: ["move", "12"] })
                     output.push({ line: i, cmd: [instruction, args] })
+                    output.push({ line: i, cmd: ["move", "-12"] })
                 } else {
                     output.push({ line: i, cmd: [instruction, args] })
                 }
