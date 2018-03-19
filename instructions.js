@@ -105,3 +105,27 @@ class Wait {
         return (this.waitTime <= 0)
     }
 }
+
+class AbsTurn {
+    constructor(args, bot, two) {
+        this.bot = bot
+        this.speed = Math.PI / 90
+        this.error = this.speed / 2
+
+        this.goal = args * Math.PI / 180
+
+        console.log("turn goal = " + this.goal)
+        console.log("curr turn = " + bot.rotation)
+
+        this.dt = this.speed * Math.sign(this.goal - bot.rotation)
+    }
+
+    execute() {
+        this.bot.rotation += this.dt
+        console.log("rot = " + this.bot.rotation)
+    }
+
+    isFinished() {
+        return (this.bot.rotation > this.goal - this.error && this.bot.rotation < this.goal + this.error)
+    }
+}

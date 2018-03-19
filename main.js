@@ -98,6 +98,8 @@ $(function () {
 						case "end":
 							running = false;
 							break;
+						case "absturn":
+							currCmd = new AbsTurn(script[cmdCount]["cmd"][1], bot, two)
 						default:
 							console.log("idk what this is: " + script[cmdCount]["cmd"][0])
 					}
@@ -353,7 +355,7 @@ function makeCube(two, x, y) {
 }
 
 function makeInitCube(two, bot) {
-	return makeCube(two, 0, - (33 + 12) / 2 * scaleFactor)
+	return makeCube(two, 0, - 24 * scaleFactor)
 }
 
 // TABS YESSSSS
