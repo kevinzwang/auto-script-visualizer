@@ -42,22 +42,35 @@ function parseScript(input) {
         if (currLine == "" || isValidCommand(instruction, args)) {
             displayValidated(instruction, args, true, i)
             if (currLine != "") {
+                if (i > 0) {
+                    output.push({ line: i, cmd: ["wait", "0.5"] })
+                }
                 if (instruction == "moveto") {
                     var argArray = args.split(" ")
                     for (var j = 0; j < argArray.length - 1; j++) {
                         output.push({ line: i, cmd: ["turn", argArray[j]] })
+                        output.push({ line: i, cmd: ["wait", "0.5"] })
                         output.push({ line: i, cmd: ["move", argArray[j]] })
+                        output.push({ line: i, cmd: ["wait", "0.5"] })
                     }
                     if (isPoint(argArray[argArray.length - 1])) {
                         output.push({ line: i, cmd: ["turn", argArray[argArray.length - 1]] })
+                        output.push({ line: i, cmd: ["wait", "0.5"] })
                         output.push({ line: i, cmd: ["move", argArray[argArray.length - 1]] })
                     } else {
                         output.push({ line: i, cmd: ["absturn", argArray[argArray.length - 1]] })
                     }
-                } else if (instruction == "switch" || instruction == "scale" || instruction == "intake") {
-                    output.push({ line: i, cmd: ["move", "18"] })
+                } else if (instruction == "switch" || instruction == "scale") {
+                    output.push({ line: i, cmd: ["move", args] })
+                    output.push({ line: i, cmd: ["wait", "0.5"] })
                     output.push({ line: i, cmd: [instruction, args] })
-                    output.push({ line: i, cmd: ["move", "-18"] })
+                    output.push({ line: i, cmd: ["move", "-12"] })
+                } else if (instruction == "intake") {
+                    output.push({ line: i, cmd: ["move", "12"] })
+                    output.push({ line: i, cmd: ["wait", "0.5"] })
+                    output.push({ line: i, cmd: [instruction, args] })
+                    output.push({ line: i, cmd: ["wait", "0.5"] })
+                    output.push({ line: i, cmd: ["move", "-12"] })
                 } else {
                     output.push({ line: i, cmd: [instruction, args] })
                 }
@@ -117,7 +130,7 @@ function isValidCommand(instruction, args) {
     }
 
     // move and wait can take only a number
-    else if (instruction == "move" || instruction == "wait") {
+    else if (instruction == "move" || instruction == "wait" || instruction == "switch" || instruction == "scale") {
         if (args.includes(" ")) {
             return false;
         }
@@ -128,8 +141,7 @@ function isValidCommand(instruction, args) {
     }
 
     // switch, scale, exchange, intake, and end all don't have any args
-    else if (instruction == "switch" || instruction == "scale" || instruction == "exchange"
-        || instruction == "intake" || instruction == "end") {
+    else if (instruction == "exchange" || instruction == "intake" || instruction == "end") {
         if (args != "") {
             return false;
         }
